@@ -10,6 +10,7 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
+        "@types/video.js": "^7.3.52",
         "cross-env": "^5.1",
         "laravel-mix": "^4.0.7",
         "vue": "^2.5.17",

@@ -8,6 +8,6 @@ window.Vue = require('vue');
 
 Vue.component('video-component', require('./components/VideoComponent.vue').default);
 
-const app = new Vue({
+new Vue({
     el: '#app'
 });
