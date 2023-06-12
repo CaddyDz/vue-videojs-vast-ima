@@ -1,16 +1,15 @@
-name: Deploy to GitHub Pages
+name: Deploy
 
 on:
   push:
     branches:
       - master
-  pull_request:
-    branches: [master]
 
 jobs:
-  deploy:
+  build:
+    name: Build
     runs-on: ubuntu-latest
-    if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
+    if: ! contains(toJSON(github.event.commits.*.message), '[skip ci]')
 
     steps:
       - name: Checkout repository
@@ -26,6 +25,21 @@ jobs:
 
       - name: Build
         run: npm run prod
+
+      - name: Clear existing files
+        run: rm -rf ./public/*
+
+      - name: Upload built static files
+        uses: actions/upload-artifact@v3
+        with:
+          name: production-files
+          path: ./public
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: production-files
+          path: ./public
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
