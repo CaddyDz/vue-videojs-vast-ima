@@ -1,18 +1,19 @@
-name: Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
       - master
+  pull_request:
+    branches: [master]
 
 jobs:
-  build:
-    name: Build
+  deploy:
     runs-on: ubuntu-latest
     if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup Node
@@ -25,25 +26,6 @@ jobs:
 
       - name: Build
         run: npm run prod
-
-      - name: Upload built static files
-        uses: actions/upload-artifact@v3
-        with:
-          name: production-files
-          path: ./public
-
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
-
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: production-files
-          path: ./public
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
