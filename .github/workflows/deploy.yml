@@ -9,10 +9,10 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
+    if: ! contains(toJSON(github.event.commits.*.message), '[skip ci]')
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup Node
@@ -26,19 +26,15 @@ jobs:
       - name: Build
         run: npm run prod
 
+      - name: Clear existing files
+        run: rm -rf ./public/*
+
       - name: Upload built static files
         uses: actions/upload-artifact@v3
         with:
           name: production-files
           path: ./public
 
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
-
-    steps:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
