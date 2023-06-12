@@ -20,5 +20,8 @@
         "imports-loader": "^0.8.0",
         "videojs-ima": "^1.6.0",
         "vue-video-player": "^5.0.2"
+    },
+    "engines": {
+        "node": "12.x"
     }
 }
