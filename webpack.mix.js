@@ -31,4 +31,4 @@ mix.webpackConfig({
     ]
   }
 });
-mix.js('js/app.js', 'public/js');
+mix.js('js/app.js', 'docs/js');
